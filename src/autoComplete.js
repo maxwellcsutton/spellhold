@@ -1,3 +1,5 @@
+// copied from w3 schools to use during my proof of concept stages
+// thanks w3 schools, I'll replace this with my own code eventually
 let cardNames = []
 // TODO
 // find some way to deal with ' in names
