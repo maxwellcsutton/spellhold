@@ -55,12 +55,20 @@ async function getCardData(){
 
 async function printCardData(){
     await getCardData()
+    let staticCardInfo = document.getElementById('static-card-info');
+    let staticParent = document.createElement("p")
+    let staticChild = staticCardInfo.appendChild(staticParent)
+    staticChild.innerHTML = 
+        "<b>" + "Color: " + "</b>" + cardData[0].color + "<br>" +
+        "<b>" + "Mana Cost: " + "</b>" + cardData[0].cost + "<br>" +
+        "<b>" + "Type: " + "</b>" + cardData[0].type + "<br>" +
+        "<b>" + "Rules Text: " + "</b>" + cardData[0].text + "<br>"
     let dynamicCardInfo = document.getElementById('dynamic-card-info');
     cardData.forEach((elem)=>{
         console.log(elem.setName)
-        let dynamicImageParent = document.createElement("img")
+        let dynamicImageParent = document.createElement("p")
         let dynamicImage = dynamicCardInfo.appendChild(dynamicImageParent)
-        dynamicImage.innerHTML = `<img id="card-image" src="${elem.image}">`
+        dynamicImage.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode}">`
         console.log(elem.image)
         let dynamicParent = document.createElement("p")
         let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
@@ -71,7 +79,8 @@ async function printCardData(){
             "<b>" + "Price: " + "</b>" + elem.price + "<br>" +
             "<b>" + "Projected Buy Price: " + "</b>" + elem.projectedBuyPrice + "<br>" +
             "<b>" + "Foil Price: " + "</b>" + elem.foilPrice + "<br>" +
-            "<b>" + "Projected Foil Buy Price: " + "</b>" + elem.projectedFoilBuyPrice + "<br>"
+            "<b>" + "Projected Foil Buy Price: " + "</b>" + elem.projectedFoilBuyPrice + "<br>" +
+            "<a href=" + elem.link + " target="+"_blank"+">Check TCGPlayer.com</a>"
       })
 }
 
