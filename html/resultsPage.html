@@ -3,7 +3,6 @@
  
 <head>
   <link rel="stylesheet" href="../css/styles.css">
-  <div class="resultingCardName"></div>
 </head>
 <body>
 </body>
@@ -19,16 +18,8 @@
 <script type="text/javascript" src="../src/autoComplete.js"></script> 
 <script type="text/javascript" src="../src/getCardData.js"></script>
 
-<h1><script type="text/javascript">document.write(localStorage["submission"])</script></h1>
-<p><script type="text/javascript">
-  function printCardData(){
-    console.log(cardData)
-    cardData.forEach((elem)=>{
-      console.log(elem)
-      document.write(cardData[elem].name)
-      console.log(cardData[elem].name)
-    })
-  }
-  printCardData()
-</script></p>
+<h1 id="card-name"><script type="text/javascript">document.write(localStorage["submission"])</script></h1>
+<p id="static-card-info"></p>
+<h1 id="all-printings">All Printings Placeholder</h1>
+<p id="dynamic-card-info"></p>
 
