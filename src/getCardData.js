@@ -65,11 +65,9 @@ async function printCardData(){
         "<b>" + "Rules Text: " + "</b>" + cardData[0].text + "<br>"
     let dynamicCardInfo = document.getElementById('dynamic-card-info');
     cardData.forEach((elem)=>{
-        console.log(elem.setName)
         let dynamicImageParent = document.createElement("p")
         let dynamicImage = dynamicCardInfo.appendChild(dynamicImageParent)
-        dynamicImage.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode}">`
-        console.log(elem.image)
+        dynamicImage.innerHTML = `<img id="card-image" align="left" src=${elem.image} alt=${elem.setCode}>`
         let dynamicParent = document.createElement("p")
         let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
         dynamicInfoChild.innerHTML = 
