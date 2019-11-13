@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
+ 
 <head>
   <link rel="stylesheet" href="../css/styles.css">
-  <div class="resultingCardName"></div>
-  <h1><script>localStorage["submission"]</script></h1>
 </head>
 <body>
-
 </body>
 </html>
 
@@ -18,4 +16,10 @@
 </form>
 
 <script type="text/javascript" src="../src/autoComplete.js"></script> 
-<script type="text/javascript" src="../src/getCardData.js"></script> 
+<script type="text/javascript" src="../src/getCardData.js"></script>
+
+<h1 id="card-name"><script type="text/javascript">document.write(localStorage["submission"])</script></h1>
+<p id="static-card-info"></p>
+<h1 id="all-printings">All Printings Placeholder</h1>
+<p id="dynamic-card-info"></p>
+
