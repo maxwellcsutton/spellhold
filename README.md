@@ -6,5 +6,5 @@ The current iteration has two pages, index.html, the search bar, and resultsPage
 ### TODO
 1. Add cart system to allow users to add cards to the cart with a custom quantity and price and denotate whether buying the card from a customer or selling to them
 2. Add CSS and tweak the UI for a better user experience
-3. Cache Scryfall API in SQL database and create HTTP requests that database to obfuscate Scryfall API
+3. Cache card data from Scryfall API in SQL database and create HTTP requests that database to obfuscate Scryfall API
 4. React refactor and automated testing just to practice both
