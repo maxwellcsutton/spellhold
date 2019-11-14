@@ -1,5 +1,5 @@
 # spellhold
-Pricing website for Spellhold Games
+Pricing website for Spellhold Games.  The standard pricing website, TCGPlayer, can often be slow and unwieldy so I decided to create my own pricing source to speed up customer interactions regarding card buying and selling for myself and my business partners.
 
 The current iteration has two pages, index.html, the search bar, and resultsPage.html, which also contains the search bar but displays the results of the search as well.  Autocomplete.js provides the logic behind creating the autocomplete and menu of matching Magic card names in addition to persisting the searched card name on click of submit.  getCardData.js feeds the submission from the search bar into a call from the Scryfall API which gets the card data, then loops through the resulting json file extracting and displaying all relevant card data.
 
