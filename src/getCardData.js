@@ -1,14 +1,9 @@
 // for live
 
-let rawCardName = localStorage["submission"]
+let cardName = localStorage["submission"]
 // for testing in the command line - (npm i node-fetch)
 // const fetch = require("node-fetch")
-// let rawCardName = "Jace, Vryn's Prodigy // Jace, Telepath Unbound"
-let cardName = rawCardName.split(" ").join("+")
-let specialCharacterCheck = cardName.includes(",")
-if (specialCharacterCheck){
-    cardName = cardName.split(",").join("")
-}
+// let cardName = "Aberrant%20Researcher%20%2F%2F%20Perfected%20Form"
 let cardData = []
 
 function createCardDataObjectforEachSet(index){
@@ -19,19 +14,23 @@ function createCardDataObjectforEachSet(index){
     let isDoubleSided = index.card_faces
     let isCreature = index.power
     let isPlaneswalker = index.loyalty
+    // creates an object of all relevant card data
     let obj = new Object()
     obj.name = index.name
     obj.setCode = index.set
     obj.setName = index.set_name
     obj.rarity = index.rarity
     if (price){
+    // if the non foil price exists, add it to the object
     obj.price = "$"+index.prices.usd
     obj.projectedBuyPrice = "$"+buyPrice
     } else if (!price){
+        // if it doesn't, say so
         obj.price = "Printings in this set are only available in foil."
         obj.projectedBuyPrice = "Printings in this set are only available in foil."
     }
     if (foilPrice){
+        //same for foil price
     obj.foilPrice = "$"+index.prices.usd_foil
     obj.projectedFoilBuyPrice = "$"+foilBuyPrice
     } else if (!foilPrice){
@@ -40,11 +39,14 @@ function createCardDataObjectforEachSet(index){
     }
     obj.link = index.purchase_uris.tcgplayer
     if (!isDoubleSided){
+        // double sided cards exist, this checks if it is double sided, and if it isn't, parses the json normally
         obj.color = index.colors
         obj.cost = index.mana_cost
         obj.type = index.type_line
         obj.text = index.oracle_text
         obj.image = index.image_uris.normal
+        //creatures and planeswalkers have additional information on the card that other card types don't have.  This checks if it exists
+        //then if it does, adds it to the object
         if (isCreature){
             obj.power = index.power
             obj.toughness = index.toughness
@@ -53,6 +55,7 @@ function createCardDataObjectforEachSet(index){
             obj.loyalty = isPlaneswalker
         }
     } else if (isDoubleSided){
+        //if the card IS double sided, instead get the information for both the front and back of the card
         let faces = []
         obj.cardFaces = faces
         isDoubleSided.forEach((side)=>{
@@ -80,12 +83,18 @@ function createCardDataObjectforEachSet(index){
     //this excludes all online only printings
     if (price || foilPrice){
         // this finds multiple printings from the same set (since magic used to print the same card with different arts in the same set) and increments them
+        let increment = 1
         cardData.forEach((set)=>{
+            //set is the index of the array, each index of the array contains setCode : (the actual set code)
             let findDuplicates = Object.values(set).includes(obj.setCode)
+            //searches the array of card data objects for for a duplicate setCode
             if (findDuplicates){
-                obj.setCode = index.set +=1
+                //if theres a duplicate, findDuplicates = true so add (1) to the setCode
+                obj.setCode = index.set + "(" + increment + ")"
+                increment++
             }
         })
+        //pushes each individual card object to an array of card objects for later use
         cardData.push(obj)
     }
     return 
@@ -112,6 +121,7 @@ async function printCardData(){
     let isPlaneswalker = cardData[0].loyalty
     let isDoubleSided = cardData[0].cardFaces
     if (!isDoubleSided){
+        // more logic for handling double sided cards, creatures, and planeswalkers
         let staticCardDataHTML =
             `<b>Color: </b>${cardData[0].color}<br>
             <b>Mana Cost: </b>${cardData[0].cost}<br>
@@ -165,7 +175,7 @@ async function printCardData(){
         let dynamicTabParent = document.createElement("button")
         let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
         dynamicTabButtons.innerHTML =
-            `<button class="tablinks" onclick="openCardTab(event, ${elem.setCode})">${elem.setCode.toUpperCase()}</button>
+            `<button class="tablinks" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>
             <div id=${elem.setCode} class="tabcontent" align="left"><h3 align="center">${elem.setCode.toUpperCase()}</h3></div>`
         let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
         let dynamicImageParent1 = document.createElement("p")

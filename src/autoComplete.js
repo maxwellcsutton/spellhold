@@ -1,12 +1,16 @@
 // copied from w3 schools to use during my proof of concept stages
 // thanks w3 schools, I'll replace this with my own code eventually
+// but ill keep all the encoding i wrote
 let cardNames = []
 // TODO
-// find some way to deal with ' , and other special characters in names
+// find a better way to deal with '
 async function fetchCardNames(){
     let response = await fetch("https://api.scryfall.com/catalog/card-names")
     let json = await response.json()
     cardNames = json.data
+    cardNames.forEach((elem, i, cardNames)=>{
+      cardNames[i] = encodeURIComponent(elem).replace(/'/g, "%27")
+    })
     return cardNames
 };
 
@@ -35,14 +39,14 @@ async function autocomplete(inp) {
             /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
             /*make the matching letters bold:*/
-            b.innerHTML = "<strong>" + cardNames[i].substr(0, val.length) + "</strong>";
-            b.innerHTML += cardNames[i].substr(val.length);
+            b.innerHTML = "<strong>" + decodeURIComponent(cardNames[i]).substr(0, val.length) + "</strong>";
+            b.innerHTML += decodeURIComponent(cardNames[i]).substr(val.length);
             /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + cardNames[i] + "'>";
             /*execute a function when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function(e) {
                 /*insert the value for the autocomplete text field:*/
-                inp.value = this.getElementsByTagName("input")[0].value
+                inp.value = decodeURIComponent(this.getElementsByTagName("input")[0].value)
                 console.log(inp.value)
                 /*close the list of autocompleted values,
                 (or any other open lists of autocompleted values:*/
