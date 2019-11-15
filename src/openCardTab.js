@@ -8,7 +8,6 @@ function openCardTab(event, code) {
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-    console.log(code)
-    code.style.display = "block";
+    document.getElementById(code).style.display = "block";
     event.currentTarget.className += " active";
   }
