@@ -66,6 +66,7 @@ function createCardDataObjectforEachSet(index){
             doubleSided.text = side.oracle_text
             doubleSided.image = side.image_uris.small
             // if you're reading this and are unfamiliar with magic, look up Jace, Vryn's Prodigy to see how this can get hairy
+            // and why I have so much handling for double-sided cards
             if (isDoubleSidedCreature){
                 doubleSided.power = side.power
                 doubleSided.toughness = side.toughness
@@ -102,7 +103,8 @@ async function printCardData(){
     let staticChild1 = staticCardInfo.appendChild(staticParent1)
     let isCreature = cardData[0].power
     let isPlaneswalker = cardData[0].loyalty
-    if (!cardData[0].cardFaces){
+    let isDoubleSided = cardData[0].cardFaces
+    if (!isDoubleSided){
         let staticCardDataHTML =
             `<b>Color: </b>${cardData[0].color}<br>
             <b>Mana Cost: </b>${cardData[0].cost}<br>
@@ -120,7 +122,7 @@ async function printCardData(){
                     `<b>Loyalty: </b>${cardData[0].loyalty}<br>`
             }
         }
-    } else if (cardData[0].cardFaces) {
+    } else if (isDoubleSided) {
         let staticParent2 = document.createElement("p")
         let staticChild2 = staticCardInfo.appendChild(staticParent2)
         let eachFaceHTML = []
@@ -150,12 +152,24 @@ async function printCardData(){
         staticChild1.innerHTML = eachFaceHTML[0]
         staticChild2.innerHTML = eachFaceHTML[1]
         }
-    let dynamicCardInfo = document.getElementById('dynamic-card-info');
     cardData.forEach((elem)=>{
+        let dynamicTab = document.getElementById("tab-buttons")
+        let dynamicTabParent = document.createElement("button")
+        let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
+        dynamicTabButtons.innerHTML =   `<button class="tablinks" onclick="openCardTab(event, ${elem.setCode})">${elem.setCode.toUpperCase()}</button>
+                                         <div id=${elem.setCode} class="tabcontent"><h3>${elem.setCode}</h3></div>`
+        let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
         //this will display all info that changes per set
-        let dynamicImageParent = document.createElement("p")
-        let dynamicImage = dynamicCardInfo.appendChild(dynamicImageParent)
-        dynamicImage.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode}>`
+        let dynamicImageParent1 = document.createElement("p")
+        let dynamicImage1 = dynamicCardInfo.appendChild(dynamicImageParent1)
+        if (!isDoubleSided){
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode}>`
+        } else if (isDoubleSided){
+            let dynamicImageParent2 = document.createElement("p")
+            let dynamicImage2 = dynamicCardInfo.appendChild(dynamicImageParent2)
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left">`
+            dynamicImage2.innerHTML = `<img id="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left">`
+        }
         let dynamicParent = document.createElement("p")
         let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
         dynamicInfoChild.innerHTML = 
@@ -171,4 +185,3 @@ async function printCardData(){
 }
 
 printCardData()
-
