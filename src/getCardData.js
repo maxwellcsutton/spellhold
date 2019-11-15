@@ -1,7 +1,7 @@
 // for live
 
 let rawCardName = localStorage["submission"]
-// for testing
+// for testing in the command line
 // const fetch = require("node-fetch")
 // let rawCardName = "force of will"
 let cardName = rawCardName.split(" ").join("+")
@@ -22,22 +22,22 @@ function createCardDataObjectforEachSet(index){
     obj.type = index.type_line
     obj.text = index.oracle_text
     if (price){
-    obj.price = index.prices.usd
-    obj.projectedBuyPrice = buyPrice
+    obj.price = "$"+index.prices.usd
+    obj.projectedBuyPrice = "$"+buyPrice
     } else if (!price){
         obj.price = "Printings in this set are only available in foil."
         obj.projectedBuyPrice = "Printings in this set are only available in foil."
     }
     if (foilPrice){
-    obj.foilPrice = index.prices.usd_foil
-    obj.projectedFoilBuyPrice = foilBuyPrice
+    obj.foilPrice = "$"+index.prices.usd_foil
+    obj.projectedFoilBuyPrice = "$"+foilBuyPrice
     } else if (!foilPrice){
         obj.foilPrice = "Printings in this set are only available in non-foil."
         obj.projectedFoilBuyPrice = "Printings in this set are only available in non-foil."
     }
     obj.link = index.purchase_uris.tcgplayer
     obj.image = index.image_uris.small
-    if (price !== null || foilPrice){
+    if (price || foilPrice){
         cardData.push(obj)
     }
     return 
@@ -59,10 +59,10 @@ async function printCardData(){
     let staticParent = document.createElement("p")
     let staticChild = staticCardInfo.appendChild(staticParent)
     staticChild.innerHTML = 
-        "<b>" + "Color: " + "</b>" + cardData[0].color + "<br>" +
-        "<b>" + "Mana Cost: " + "</b>" + cardData[0].cost + "<br>" +
-        "<b>" + "Type: " + "</b>" + cardData[0].type + "<br>" +
-        "<b>" + "Rules Text: " + "</b>" + cardData[0].text + "<br>"
+        `<b>Color: </b>${cardData[0].color}<br>
+        <b>Mana Cost: </b>${cardData[0].cost}<br>
+        <b>Type: </b>${cardData[0].type}<br>
+        <b>Rules Text: </b>${cardData[0].text}<br>`
     let dynamicCardInfo = document.getElementById('dynamic-card-info');
     cardData.forEach((elem)=>{
         let dynamicImageParent = document.createElement("p")
@@ -71,14 +71,14 @@ async function printCardData(){
         let dynamicParent = document.createElement("p")
         let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
         dynamicInfoChild.innerHTML = 
-            "<b>" + "Set Name: " + "</b>" + elem.setName + "<br>" +
-            "<b>" + "Set Code: " + "</b>" + elem.setCode.toUpperCase() + "<br>" +
-            "<b>" + "Rarity: " + "</b>" + elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1) + "<br>" +
-            "<b>" + "Price: " + "</b>" + elem.price + "<br>" +
-            "<b>" + "Projected Buy Price: " + "</b>" + elem.projectedBuyPrice + "<br>" +
-            "<b>" + "Foil Price: " + "</b>" + elem.foilPrice + "<br>" +
-            "<b>" + "Projected Foil Buy Price: " + "</b>" + elem.projectedFoilBuyPrice + "<br>" +
-            "<a href=" + elem.link + " target="+"_blank"+">Check TCGPlayer.com</a>"
+            `<b>Set Name: </b>${elem.setName}<br>
+            <b>Set Code: </b>${elem.setCode.toUpperCase()}<br>
+            <b>Rarity: </b>${elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1)}<br>
+            <b>Price: </b>${elem.price}<br>
+            <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
+            <b>Foil Price: </b>${elem.foilPrice}<br>
+            <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br>
+            <a href=${elem.link} target="_blank">Check TCGPlayer.com</a>`
       })
 }
 
