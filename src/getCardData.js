@@ -61,13 +61,22 @@ function createCardDataObjectforEachSet(index){
         isDoubleSided.forEach((side)=>{
             let isDoubleSidedCreature = side.power
             let isDoubleSidedPlaneswalker = side.loyalty
+            let isntSplit = side.image_uris
             let doubleSided = new Object()
             doubleSided.name = side.name
             doubleSided.color = side.colors
             doubleSided.cost = side.mana_cost
             doubleSided.type = side.type_line
             doubleSided.text = side.oracle_text
-            doubleSided.image = side.image_uris.normal
+            if (isntSplit){
+                //split cards and adventures will fall into this block, but their image is in the normal image location
+                //so if the card isn't split, get the image of each side
+                doubleSided.image = side.image_uris.normal
+            } else if (!isntSplit){
+                //and if it isn't split, do what would be done for a normal card
+                obj.image = index.image_uris.normal
+                doubleSided.color = index.colors
+            }
             // if you're reading this and are unfamiliar with magic, look up Jace, Vryn's Prodigy to see how this can get hairy
             // and why I have so much handling for double-sided cards
             if (isDoubleSidedCreature){
@@ -120,6 +129,7 @@ async function printCardData(){
     let isCreature = cardData[0].power
     let isPlaneswalker = cardData[0].loyalty
     let isDoubleSided = cardData[0].cardFaces
+    let isSplitOrNormal = cardData[0].image
     if (!isDoubleSided){
         // more logic for handling double sided cards, creatures, and planeswalkers
         let staticCardDataHTML =
@@ -180,13 +190,13 @@ async function printCardData(){
         let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
         let dynamicImageParent1 = document.createElement("p")
         let dynamicImage1 = dynamicCardInfo.appendChild(dynamicImageParent1)
-        if (!isDoubleSided){
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} width="50%" height="50%">`
+        if (isSplitOrNormal){
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} width="244px" height="340px">`
         } else if (isDoubleSided){
             let dynamicImageParent2 = document.createElement("p")
             let dynamicImage2 = dynamicCardInfo.appendChild(dynamicImageParent2)
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left" width="50%" height="50%">`
-            dynamicImage2.innerHTML = `<img id="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left" width="50%" height="50%">`
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
+            dynamicImage2.innerHTML = `<img id="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
         }
         let dynamicParent = document.createElement("p")
         let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
