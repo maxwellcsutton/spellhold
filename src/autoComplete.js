@@ -2,7 +2,7 @@
 // thanks w3 schools, I'll replace this with my own code eventually
 let cardNames = []
 // TODO
-// find some way to deal with ' in names
+// find some way to deal with ' , and other special characters in names
 async function fetchCardNames(){
     let response = await fetch("https://api.scryfall.com/catalog/card-names")
     let json = await response.json()
