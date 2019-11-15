@@ -2,8 +2,7 @@
 // thanks w3 schools, I'll replace this with my own code eventually
 // but ill keep all the encoding i wrote
 let cardNames = []
-// TODO
-// find a better way to deal with '
+
 async function fetchCardNames(){
     let response = await fetch("https://api.scryfall.com/catalog/card-names")
     let json = await response.json()
