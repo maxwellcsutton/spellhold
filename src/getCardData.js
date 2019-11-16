@@ -184,14 +184,16 @@ async function printCardData(){
         let dynamicTab = document.getElementById("tab-buttons")
         let dynamicTabParent = document.createElement("button")
         let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
-        dynamicTabButtons.innerHTML =
-            `<button class="tablinks" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>
-            <div id=${elem.setCode} class="tabcontent" align="left"><h3 align="center">${elem.setCode.toUpperCase()}</h3></div>`
+        dynamicTabButtons.innerHTML = `<button class="tablinks" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>`
+        let dynamicTabContent = document.getElementById("tab-content")
+        let dynamicTabContentParent = document.createElement("div")
+        let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
+        dynamicTabContentChild.innerHTML = `<div id=${elem.setCode} class="tabcontent" align="left"><h3 align="center">${elem.setCode.toUpperCase()}</h3></div>`
         let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
         let dynamicImageParent1 = document.createElement("p")
         let dynamicImage1 = dynamicCardInfo.appendChild(dynamicImageParent1)
         if (isSplitOrNormal){
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} width="244px" height="340px">`
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
         } else if (isDoubleSided){
             let dynamicImageParent2 = document.createElement("p")
             let dynamicImage2 = dynamicCardInfo.appendChild(dynamicImageParent2)
