@@ -1,5 +1,4 @@
 // for live
-
 let cardName = localStorage["submission"]
 // for testing in the command line - (npm i node-fetch)
 // const fetch = require("node-fetch")
@@ -135,30 +134,32 @@ async function printCardData(){
     let isSplitOrNormal = cardData[0].image
     if (!isDoubleSided){
         // more logic for handling double sided cards, creatures, and planeswalkers
-        let staticCardDataHTML =
+        let staticResultsTemplate =
             `<b>Color: </b>${cardData[0].color}<br>
             <b>Mana Cost: </b>${cardData[0].cost}<br>
             <b>Type: </b>${cardData[0].type}<br>
             <b>Rules Text: </b>${cardData[0].text}<br>`
          if (!cardData[0].cardFaces){
             if (!isCreature && !isPlaneswalker){
-                staticChild1.innerHTML = staticCardDataHTML
+                staticChild1.innerHTML = staticResultsTemplate
             } else if (isCreature){
-                staticChild1.innerHTML = staticCardDataHTML + 
+                staticChild1.innerHTML = staticResultsTemplate + 
                     `<b>Power: </b>${cardData[0].power}<br>
                     <b>Toughness: </b>${cardData[0].toughness}<br>`
             } else if (isPlaneswalker){
-                staticChild1.innerHTML = staticCardDataHTML + 
+                staticChild1.innerHTML = staticResultsTemplate + 
                     `<b>Loyalty: </b>${cardData[0].loyalty}<br>`
+            } else {
+                staticChild1.innerHTML = `Failed to display card data`
             }
         }
     } else if (isDoubleSided) {
-        let staticParent2 = document.createElement("div")
+        let staticParent2 = document.createElement("p")
         let staticChild2 = staticCardInfo.appendChild(staticParent2)
         let eachFaceHTML = []
         let eachFace = cardData[0].cardFaces
         eachFace.forEach((face)=>{
-            let staticCardDataHTML = 
+            let staticResultsTemplate = 
             `<b>Name: </b>${face.name}<br>
             <b>Color: </b>${face.color}<br>
             <b>Mana Cost: </b>${face.cost}<br>
@@ -167,16 +168,18 @@ async function printCardData(){
             let isCreature = face.power
             let isPlaneswalker = face.loyalty
             if (!isCreature && !isPlaneswalker){
-                eachFaceHTML.push(staticCardDataHTML)
+                eachFaceHTML.push(staticResultsTemplate)
             } else if (isCreature){
-                staticCardDataHTML = staticCardDataHTML + 
+                staticResultsTemplate = staticResultsTemplate + 
                     `<b>Power: </b>${face.power}<br>
                     <b>Toughness: </b>${face.toughness}<br>`
-                eachFaceHTML.push(staticCardDataHTML)
+                eachFaceHTML.push(staticResultsTemplate)
             } else if (isPlaneswalker) {
-                staticCardDataHTML = staticCardDataHTML +
+                staticResultsTemplate = staticResultsTemplate +
                     `<b>Loyalty: </b>${face.loyalty}<br>`
-                eachFaceHTML.push(staticCardDataHTML)
+                eachFaceHTML.push(staticResultsTemplate)
+            } else {
+                eachFaceHTML.push(`Failed to display card data`)
             }
         })
         staticChild1.innerHTML = eachFaceHTML[0]
@@ -190,12 +193,12 @@ async function printCardData(){
         dynamicTabButtons.innerHTML = `<button class="tab-links" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>`
         let cardImage = "No Image Found"
         if (isSplitOrNormal){
-            cardImage = `<img class="card-image" src=${elem.image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
+            cardImage = `<img class="card-image" src=${elem.image} alt=${elem.setCode}>`
         } else if (isDoubleSided){
-            cardImage = `<img class="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">
-                        <img class="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
+            cardImage = `<img class="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode}>
+                        <img class="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode}>`
         } else {
-            //TODO find blank image to put instead
+            `<img class="card-image" src="https://ih0.redbubble.net/image.740534994.5777/mp,840x830,matte,f8f8f8,t-pad,750x1000,f8f8f8.u1.jpg" alt="Failed to display image">`
         }
         let dynamicResultsTemplate = 
             `<div id=${elem.setCode} class="tab-results">
@@ -212,10 +215,15 @@ async function printCardData(){
                     <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
                     <b>Foil Price: </b>${elem.foilPrice}<br>
                     <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
-                    <a href=${elem.link} target="_blank">Check TCGPlayer.com</a>
+                    <a href=${elem.link} target="_blank">Check TCGPlayer.com</a><br><br>
+                    <form id="add-to-fake-cart-${elem.setCode}">
+                        Price: <input class="card-price" type="text" value=${elem.price}>
+                        Quantity: <input id="quantity-${elem.setCode}" class="card-quantity" type="number" min="1">
+                        <input type="submit" value="Add to Cart">
+                    </form>
                 </div>
             </div>`
-
+        //TODO- figure out how to make the code from preventE.js work with these card quantity fields
         let dynamicTabContent = document.getElementById("tab-content")
         let dynamicTabContentParent = document.createElement("div")
         let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
@@ -224,5 +232,4 @@ async function printCardData(){
 }
 
 printCardData()
-
 

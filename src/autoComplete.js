@@ -1,6 +1,6 @@
-// copied from w3 schools to use during my proof of concept stages
-// thanks w3 schools, I'll replace this with my own code eventually
-// but ill keep all the encoding i wrote
+// mostly copied from w3 schools tutorial, had to make some edits to make it work how I wanted to
+// mainly encoding and handling submit better
+// ill save writing my own autocomplete function for the react refactor
 let cardNames = []
 
 async function fetchCardNames(){
@@ -15,90 +15,67 @@ async function fetchCardNames(){
 
 async function autocomplete(inp) {
     await fetchCardNames()
-    /*the autocomplete function takes two arguments,
-    the text field element and an array of possible autocompleted values:*/
     var currentFocus;
-    /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
         val = encodeURIComponent(val).replace(/'/g, "%27")
-        /*close any already open lists of autocompleted values*/
         closeAllLists();
         if (!val) { return false;}
         currentFocus = -1;
-        /*create a DIV element that will contain the items (values):*/
         a = document.createElement("DIV");
         a.setAttribute("id", this.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
-        /*append the DIV element as a child of the autocomplete container:*/
         this.parentNode.appendChild(a);
-        /*for each item in the array...*/
         for (i = 0; i < cardNames.length; i++) {
-          /*check if the item starts with the same letters as the text field value:*/
           if (cardNames[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-            /*create a DIV element for each matching element:*/
             b = document.createElement("DIV");
-            /*make the matching letters bold:*/
             b.innerHTML = "<strong>" + decodeURIComponent(cardNames[i]).substr(0, val.length) + "</strong>";
             b.innerHTML += decodeURIComponent(cardNames[i]).substr(val.length);
-            /*insert a input field that will hold the current array item's value:*/
             b.innerHTML += "<input type='hidden' value='" + cardNames[i] + "'>";
-            /*execute a function when someone clicks on the item value (DIV element):*/
                 b.addEventListener("click", function(e) {
-                /*insert the value for the autocomplete text field:*/
                 inp.value = decodeURIComponent(this.getElementsByTagName("input")[0].value)
-                /*close the list of autocompleted values,
-                (or any other open lists of autocompleted values:*/
                 closeAllLists();
             });
             a.appendChild(b);
           }
         }
     });
-    /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function(e) {
+        console.log(e.keyCode)
+        console.log(this.value)
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
-          /*If the arrow DOWN key is pressed,
-          increase the currentFocus variable:*/
           currentFocus++;
-          /*and and make the current item more visible:*/
           addActive(x);
-        } else if (e.keyCode == 38) { //up
-          /*If the arrow UP key is pressed,
-          decrease the currentFocus variable:*/
+        } else if (e.keyCode == 38) {
           currentFocus--;
-          /*and and make the current item more visible:*/
           addActive(x);
         } else if (e.keyCode == 13) {
-          /*If the ENTER key is pressed, prevent the form from being submitted,*/
-          e.preventDefault();
+          // if the enter key is pressed and the card doesnt exist, prevent the form from being submitted
+          let cardExists = cardNames.includes(encodeURIComponent(this.value))
+          console.log(cardExists)
+          if (!cardExists){
+            e.preventDefault()
+          }
           if (currentFocus > -1) {
-            /*and simulate a click on the "active" item:*/
             if (x) x[currentFocus].click();
           }
         }
     });
     function addActive(x) {
-      /*a function to classify an item as "active":*/
       if (!x) return false;
-      /*start by removing the "active" class on all items:*/
       removeActive(x);
       if (currentFocus >= x.length) currentFocus = 0;
       if (currentFocus < 0) currentFocus = (x.length - 1);
-      /*add class "autocomplete-active":*/
       x[currentFocus].classList.add("autocomplete-active");
     }
     function removeActive(x) {
-      /*a function to remove the "active" class from all autocomplete items:*/
       for (var i = 0; i < x.length; i++) {
         x[i].classList.remove("autocomplete-active");
       }
     }
     function closeAllLists(elmnt) {
-      /*close all autocomplete lists in the document,
-      except the one passed as an argument:*/
       var x = document.getElementsByClassName("autocomplete-items");
       for (var i = 0; i < x.length; i++) {
         if (elmnt != x[i] && elmnt != inp) {
@@ -106,16 +83,17 @@ async function autocomplete(inp) {
       }
     }
   }
-  /*execute a function when someone clicks in the document:*/
   document.addEventListener("click", function (e) {
       closeAllLists(e.target);
   });
   }
 
-  autocomplete(document.getElementById("searchBar"));
+  autocomplete(document.getElementById("search-bar"));
   document.addEventListener("submit", function (){
-      let submission = document.getElementById("searchBar").value.toString()
+      let submission = document.getElementById("search-bar").value
       localStorage["submission"] = submission
   })
+
+
 
   
