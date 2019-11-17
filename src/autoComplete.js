@@ -22,7 +22,6 @@ async function autocomplete(inp) {
     inp.addEventListener("input", function(e) {
         var a, b, i, val = this.value;
         val = encodeURIComponent(val).replace(/'/g, "%27")
-        console.log(val)
         /*close any already open lists of autocompleted values*/
         closeAllLists();
         if (!val) { return false;}

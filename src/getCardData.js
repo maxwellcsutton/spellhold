@@ -3,7 +3,7 @@
 let cardName = localStorage["submission"]
 // for testing in the command line - (npm i node-fetch)
 // const fetch = require("node-fetch")
-// let cardName = "Aberrant%20Researcher%20%2F%2F%20Perfected%20Form"
+// let cardName = ""
 let cardData = []
 
 function createCardDataObjectforEachSet(index){
@@ -19,6 +19,7 @@ function createCardDataObjectforEachSet(index){
     obj.name = index.name
     obj.setCode = index.set
     obj.setName = index.set_name
+    obj.collectorsNumber = index.collector_number
     obj.rarity = index.rarity
     if (price){
     // if the non foil price exists, add it to the object
@@ -26,16 +27,16 @@ function createCardDataObjectforEachSet(index){
     obj.projectedBuyPrice = "$"+buyPrice
     } else if (!price){
         // if it doesn't, say so
-        obj.price = "Printings in this set are only available in foil."
-        obj.projectedBuyPrice = "Printings in this set are only available in foil."
+        obj.price = "N/A"
+        obj.projectedBuyPrice = "N/A"
     }
     if (foilPrice){
         //same for foil price
     obj.foilPrice = "$"+index.prices.usd_foil
     obj.projectedFoilBuyPrice = "$"+foilBuyPrice
     } else if (!foilPrice){
-        obj.foilPrice = "Printings in this set are only available in non-foil."
-        obj.projectedFoilBuyPrice = "Printings in this set are only available in non-foil."
+        obj.foilPrice = "N/A"
+        obj.projectedFoilBuyPrice = "N/A"
     }
     obj.link = index.purchase_uris.tcgplayer
     if (!isDoubleSided){
@@ -90,7 +91,8 @@ function createCardDataObjectforEachSet(index){
         })
     }
     //this excludes all online only printings
-    if (price || foilPrice){
+    let paperPrintingExists = index.games
+    if (paperPrintingExists.includes("paper")){
         // this finds multiple printings from the same set (since magic used to print the same card with different arts in the same set) and increments them
         let increment = 1
         cardData.forEach((set)=>{
@@ -110,6 +112,7 @@ function createCardDataObjectforEachSet(index){
 }
 
 async function getCardData(){
+    //fetches the card data and constructs the cardData array of card data objects for each printing
     let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&q=!%22${cardName}%22`)
     let json = await response.json()
     let allPrintingsObj = json.data
@@ -188,12 +191,12 @@ async function printCardData(){
         let dynamicTabContent = document.getElementById("tab-content")
         let dynamicTabContentParent = document.createElement("div")
         let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
-        dynamicTabContentChild.innerHTML = `<div id=${elem.setCode} class="tabcontent" align="left"><h3 align="center">${elem.setCode.toUpperCase()}</h3></div>`
+        dynamicTabContentChild.innerHTML = `<div id=${elem.setCode} class="tabcontent" align="left" style="font-size: .8em;"><h3 align="left">${elem.setName}</h3></div>`
         let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
         let dynamicImageParent1 = document.createElement("p")
         let dynamicImage1 = dynamicCardInfo.appendChild(dynamicImageParent1)
         if (isSplitOrNormal){
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
+            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
         } else if (isDoubleSided){
             let dynamicImageParent2 = document.createElement("p")
             let dynamicImage2 = dynamicCardInfo.appendChild(dynamicImageParent2)
@@ -205,11 +208,12 @@ async function printCardData(){
         dynamicInfoChild.innerHTML = 
             `<b>Set Name: </b>${elem.setName}<br>
             <b>Set Code: </b>${elem.setCode.toUpperCase()}<br>
+            <b>Collector's Number: </b>${elem.collectorsNumber}<br>
             <b>Rarity: </b>${elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1)}<br>
             <b>Price: </b>${elem.price}<br>
             <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
             <b>Foil Price: </b>${elem.foilPrice}<br>
-            <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br>
+            <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
             <a href=${elem.link} target="_blank">Check TCGPlayer.com</a>`
       })
 }
