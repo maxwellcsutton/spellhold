@@ -216,11 +216,6 @@ async function printCardData(){
                     <b>Foil Price: </b>${elem.foilPrice}<br>
                     <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
                     <a href=${elem.link} target="_blank">Check TCGPlayer.com</a><br><br>
-                    <form id="add-to-fake-cart-${elem.setCode}">
-                        Price: <input class="card-price" type="text" value=${elem.price}>
-                        Quantity: <input id="quantity-${elem.setCode}" class="card-quantity" type="number" min="1">
-                        <input type="submit" value="Add to Cart">
-                    </form>
                 </div>
             </div>`
         //TODO- figure out how to make the code from preventE.js work with these card quantity fields
@@ -233,3 +228,8 @@ async function printCardData(){
 
 printCardData()
 
+/* <form id="add-to-fake-cart-${elem.setCode}">
+Price: <input class="card-price" type="text" value=${elem.price}>
+Quantity: <input id="quantity-${elem.setCode}" class="card-quantity" type="number" min="1">
+<input type="submit" value="Add to Cart">
+</form> */
