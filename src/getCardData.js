@@ -153,7 +153,7 @@ async function printCardData(){
             }
         }
     } else if (isDoubleSided) {
-        let staticParent2 = document.createElement("p")
+        let staticParent2 = document.createElement("div")
         let staticChild2 = staticCardInfo.appendChild(staticParent2)
         let eachFaceHTML = []
         let eachFace = cardData[0].cardFaces
@@ -187,35 +187,42 @@ async function printCardData(){
         let dynamicTab = document.getElementById("tab-buttons")
         let dynamicTabParent = document.createElement("button")
         let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
-        dynamicTabButtons.innerHTML = `<button class="tablinks" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>`
+        dynamicTabButtons.innerHTML = `<button class="tab-links" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>`
+        let cardImage = "No Image Found"
+        if (isSplitOrNormal){
+            cardImage = `<img class="card-image" src=${elem.image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
+        } else if (isDoubleSided){
+            cardImage = `<img class="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">
+                        <img class="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
+        } else {
+            //TODO find blank image to put instead
+        }
+        let dynamicResultsTemplate = 
+            `<div id=${elem.setCode} class="tab-results">
+                <h1 class="results-title">${elem.setName}</h1>
+                <div class="image-container">
+                ${cardImage}
+                </div>
+                <div class="content-container">
+                    <b>Set Name: </b>${elem.setName}<br>
+                    <b>Set Code: </b>${elem.setCode.toUpperCase()}<br>
+                    <b>Collector's Number: </b>${elem.collectorsNumber}<br>
+                    <b>Rarity: </b>${elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1)}<br>
+                    <b>Price: </b>${elem.price}<br>
+                    <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
+                    <b>Foil Price: </b>${elem.foilPrice}<br>
+                    <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
+                    <a href=${elem.link} target="_blank">Check TCGPlayer.com</a>
+                </div>
+            </div>`
+
         let dynamicTabContent = document.getElementById("tab-content")
         let dynamicTabContentParent = document.createElement("div")
         let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
-        dynamicTabContentChild.innerHTML = `<div id=${elem.setCode} class="tabcontent" align="left" style="font-size: .8em;"><h3 align="left">${elem.setName}</h3></div>`
-        let dynamicCardInfo = document.getElementById(`${elem.setCode}`);
-        let dynamicImageParent1 = document.createElement("p")
-        let dynamicImage1 = dynamicCardInfo.appendChild(dynamicImageParent1)
-        if (isSplitOrNormal){
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.image} alt=${elem.setCode} style="float: left; margin:0 1% 1% 0" width="244px" height="340px">`
-        } else if (isDoubleSided){
-            let dynamicImageParent2 = document.createElement("p")
-            let dynamicImage2 = dynamicCardInfo.appendChild(dynamicImageParent2)
-            dynamicImage1.innerHTML = `<img id="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
-            dynamicImage2.innerHTML = `<img id="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode} style="float: left" width="244px" height="340px">`
-        }
-        let dynamicParent = document.createElement("p")
-        let dynamicInfoChild = dynamicCardInfo.appendChild(dynamicParent)
-        dynamicInfoChild.innerHTML = 
-            `<b>Set Name: </b>${elem.setName}<br>
-            <b>Set Code: </b>${elem.setCode.toUpperCase()}<br>
-            <b>Collector's Number: </b>${elem.collectorsNumber}<br>
-            <b>Rarity: </b>${elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1)}<br>
-            <b>Price: </b>${elem.price}<br>
-            <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
-            <b>Foil Price: </b>${elem.foilPrice}<br>
-            <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
-            <a href=${elem.link} target="_blank">Check TCGPlayer.com</a>`
-      })
+        dynamicTabContentChild.innerHTML = dynamicResultsTemplate
+    })
 }
 
 printCardData()
+
+
