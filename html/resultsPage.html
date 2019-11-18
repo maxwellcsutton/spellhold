@@ -10,14 +10,35 @@
   <div class="autocomplete" style="width:300px;">
     <input id="search-bar" type="text" name="card-name-search-bar" placeholder="Type a card name...">
   </div>
-  <input type="submit">
+  <input id="autocomplete-submit" type="submit">
+</form>
+
+<iframe id= "cart-iframe" class="iframe" src="./cart.html" style="display:none;float:right;width:50%;height:800px"></iframe>
+<form id="cart-form" style="float:right">
+  <div id="cart-button-div">
+    <input id="cart-button" type="button" value="Show Cart">
+    <script type="text/javascript">
+      let cartButton = document.getElementById("cart-button")
+      cartButton.addEventListener("click", ()=> {
+        let iframe = document.getElementById("cart-iframe")
+        let iframeDisplay = iframe.style.display
+        console.log(iframeDisplay)
+        if (iframeDisplay == "none"){
+          iframe.style.display = "block"
+        } else if (iframeDisplay == "block"){
+          iframe.style.display = "none"
+        }
+      
+      })
+    </script>
+  </div>
 </form>
 
 <script type="text/javascript" src="../src/autoComplete.js"></script> 
 <script type="text/javascript" src="../src/getCardData.js"></script>
 <script type="text/javascript" src="../src/openCardTab.js"></script>
 
-<h1 id="card-name" style="font-size: 1.5em;"><script type="text/javascript">document.write(decodeURIComponent(localStorage["submission"]))</script></h1>
+<h1 id="card-name" style="font-size: 1.5em;"><script type="text/javascript">document.write(decodeURIComponent(sessionStorage["submission"]))</script></h1>
 <p id="static-card-info" style="font-size: 1em;"></p>
 <h2 id="all-printings" style="font-size: 1em;">All Printings</h2>
 <div id="tab-buttons" class="tab"></div>

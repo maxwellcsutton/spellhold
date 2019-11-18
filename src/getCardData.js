@@ -1,9 +1,12 @@
 // for live
-let cardName = localStorage["submission"]
+let cardName = sessionStorage["submission"]
 // for testing in the command line - (npm i node-fetch)
 // const fetch = require("node-fetch")
 // let cardName = ""
 let cardData = []
+let saleData = [JSON.parse(sessionStorage.getItem("saleData"))]
+let purchaseData = [JSON.parse(sessionStorage.getItem("purchaseData"))]
+
 
 function createCardDataObjectforEachSet(index){
     let price = index.prices.usd
@@ -217,19 +220,106 @@ async function printCardData(){
                     <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
                     <a href=${elem.link} target="_blank">Check TCGPlayer.com</a><br><br>
                     <form id="add-to-fake-cart-${elem.setCode}">
-                        Price: <input class="card-price" type="text" value=${elem.price}>
-                        Quantity: <input id="quantity-${elem.setCode}" class="card-quantity" type="number" min="1">
-                        <input type="submit" value="Add to Cart">
+                        <b>Selling to customer: </b><br>
+                        <select id="foil-selling-dropdown-${elem.setCode}">
+                            <option value="Non-foil">Non-foil</option>
+                            <option value="Foil">Foil</option>
+                        </select>
+                        Price: <input id="price-selling-${elem.setCode}" class="card-price" type="text" value=${elem.price}>
+                        Quantity: <input id="quantity-selling-${elem.setCode}" class="card-quantity" type="number" min="1" value="1">
+                        <input id="sell-button-${elem.setCode}" type="button" value="Sell"><br><br>
+                        <b>Buying from customer: </b><br>
+                        <select id="foil-buying-dropdown-${elem.setCode}">
+                            <option value="Non-foil">Non-foil</option>
+                            <option value="Foil">Foil</option>
+                        </select>
+                        Price: <input id="price-buying-${elem.setCode}" class="card-price" type="text" value=${elem.projectedBuyPrice}>
+                        Quantity: <input id="quantity-buying-${elem.setCode}" class="card-quantity" type="number" min="1" value="1">
+                        <input id="buy-button-${elem.setCode}" type="button" value="Buy">
                     </form>
                 </div>
             </div>`
-        //TODO- figure out how to make the code from preventE.js work with these card quantity fields
+
         let dynamicTabContent = document.getElementById("tab-content")
         let dynamicTabContentParent = document.createElement("div")
         let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
         dynamicTabContentChild.innerHTML = dynamicResultsTemplate
+        //this is to stop people from typing or copy/pasting e, -, or + into the number field
+        //and also provides the logic for the fake cart system
+        let cartElements = document.getElementById(`add-to-fake-cart-${elem.setCode}`)
+        let cartScripts = document.createElement("script")
+        cartScripts.type = "text/javascript"
+        let setCode = elem.setCode.replace(/[()]/g, "")
+        let sellQuantityField = `sellQuantityField_${setCode}`
+        let sellInvalidChars = `sellInvalidChars_${setCode}`
+        let buyQuantityField = `buyQuantityField_${setCode}`
+        let buyInvalidChars = `buyInvalidChars_${setCode}`
+        let sellPrice = `sellPrice_${setCode}`
+        let sellQuantity = `sellQuantity_${setCode}`
+        let sellButton = `sellButton_${setCode}`
+        let sellFoil = `sellFoil_${setCode}`
+        let sellScriptsContent = document.createTextNode(`
+            let ${sellQuantityField} = document.getElementById("quantity-selling-${elem.setCode}")
+            let ${sellInvalidChars} = ["e", "+", "-"]
+            ${sellQuantityField}.addEventListener("input", ()=>{
+                ${sellQuantityField}.value = ${sellQuantityField}.value.replace(/[e\+\-]/gi, "");
+            });
+            ${sellQuantityField}.addEventListener("keydown", (e)=>{
+                if (${sellInvalidChars}.includes(e.key)) {
+                    e.preventDefault();
+                }
+            })
+            let ${sellPrice} = document.getElementById("price-selling-${elem.setCode}")
+            let ${sellQuantity} = document.getElementById("quantity-selling-${elem.setCode}")
+            let ${sellButton} = document.getElementById("sell-button-${elem.setCode}")
+            let ${sellFoil} = document.getElementById("foil-selling-dropdown-${elem.setCode}")
+            ${sellButton}.addEventListener("click", ()=>{
+                let sale = new Object()
+                sale.name = "${elem.name}"
+                sale.setCode = "${elem.setCode}"
+                sale.quantity = ${sellQuantity}.value
+                sale.price = ${sellPrice}.value
+                sale.foil = ${sellFoil}.value
+                saleData.push(sale)
+                sessionStorage.setItem("saleData", JSON.stringify(saleData))
+                let storedSaleData = sessionStorage.getItem("saleData")
+                console.log(storedSaleData)
+        })`)
+        let buyPrice = `buyPrice_${setCode}`
+        let buyQuantity = `buyQuantity_${setCode}`
+        let buyButton = `buyButton_${setCode}`
+        let buyFoil = `buyFoil_${setCode}`
+        let buyScriptsContent = document.createTextNode(`
+            let ${buyQuantityField} = document.getElementById("quantity-buying-${elem.setCode}")
+            let ${buyInvalidChars} = ["e", "+", "-"]
+            ${buyQuantityField}.addEventListener("input", ()=>{
+                ${buyQuantityField}.value = ${buyQuantityField}.value.replace(/[e\+\-]/gi, "");
+            });
+            ${buyQuantityField}.addEventListener("keydown", (e)=>{
+                if (${buyInvalidChars}.includes(e.key)) {
+                    e.preventDefault();
+                }
+            })
+            let ${buyPrice} = document.getElementById("price-buying-${elem.setCode}")
+            let ${buyQuantity} = document.getElementById("quantity-buying-${elem.setCode}")
+            let ${buyButton} = document.getElementById("buy-button-${elem.setCode}")
+            let ${buyFoil} = document.getElementById("foil-buying-dropdown-${elem.setCode}")
+            ${buyButton}.addEventListener("click", ()=>{
+                let purchase = new Object()
+                purchase.name = "${elem.name}"
+                purchase.setCode = "${elem.setCode}"
+                purchase.quantity = ${buyQuantity}.value
+                purchase.price = ${buyPrice}.value
+                purchase.foil = ${buyFoil}.value
+                purchaseData.push(purchase)
+                sessionStorage.setItem("purchaseData", JSON.stringify(purchaseData))
+                let storedPurchaseData = sessionStorage.getItem("purchaseData")
+                console.log(storedPurchaseData)
+        })`)
+        cartScripts.appendChild(sellScriptsContent)
+        cartScripts.appendChild(buyScriptsContent)
+        cartElements.appendChild(cartScripts)
     })
 }
 
 printCardData()
-
