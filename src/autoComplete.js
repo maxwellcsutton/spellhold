@@ -44,6 +44,8 @@ async function autocomplete(inp) {
     });
     inp.addEventListener("keydown", function(e) {
         let x = document.getElementById(this.id + "autocomplete-list");
+        let searchBarError = document.getElementById("search-bar-error")
+        searchBarError.style.display = "none"
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
           currentFocus++;
@@ -56,6 +58,7 @@ async function autocomplete(inp) {
           let cardExists = cardNames.includes(encodeURIComponent(this.value))
           if (!cardExists){
             e.preventDefault()
+            searchBarError.style.display = "block"
           }
           if (currentFocus > -1) {
             if (x) x[currentFocus].click();
@@ -91,9 +94,11 @@ async function autocomplete(inp) {
   submitButton.addEventListener("click", (e)=>{
       let searchBar = document.getElementById("search-bar")
       let cardExists = cardNames.includes(encodeURIComponent(searchBar.value))
+      let searchBarError = document.getElementById("search-bar-error")
       console.log(cardExists)
       if (!cardExists){
         e.preventDefault()
+        searchBarError.style.display = "block"
       }
   })
 
