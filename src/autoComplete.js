@@ -27,11 +27,12 @@ async function autocomplete(inp) {
         a.setAttribute("class", "autocomplete-items");
         this.parentNode.appendChild(a);
         for (i = 0; i < cardNames.length; i++) {
-          // val = decodeURIComponent(val).replace(/'/g, "%27")
-          if (cardNames[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          let decodedValue = decodeURIComponent(val)
+          let decodedCardName = decodeURIComponent(cardNames[i])
+          if (decodedCardName.substr(0, decodedValue.length).toUpperCase() == decodedValue.toUpperCase()) {
             b = document.createElement("DIV");
-            b.innerHTML = "<strong>" + decodeURIComponent(cardNames[i]).substr(0, val.length) + "</strong>";
-            b.innerHTML += decodeURIComponent(cardNames[i]).substr(val.length);
+            b.innerHTML = "<strong>" + decodedCardName.substr(0, decodedValue.length) + "</strong>";
+            b.innerHTML += decodeURIComponent(decodedCardName).substr(decodedValue.length);
             b.innerHTML += "<input type='hidden' value='" + cardNames[i] + "'>";
                 b.addEventListener("click", function(e) {
                 inp.value = decodeURIComponent(this.getElementsByTagName("input")[0].value)
@@ -85,6 +86,17 @@ async function autocomplete(inp) {
       closeAllLists(e.target);
   });
   }
+
+  let submitButton = document.getElementById("autocomplete-submit")
+  submitButton.addEventListener("click", (e)=>{
+      let searchBar = document.getElementById("search-bar")
+      let cardExists = cardNames.includes(encodeURIComponent(searchBar.value))
+      console.log(cardExists)
+      if (!cardExists){
+        e.preventDefault()
+      }
+  })
+
 
   autocomplete(document.getElementById("search-bar"));
   autocompleteForm = document.getElementById("autocomplete-form")
