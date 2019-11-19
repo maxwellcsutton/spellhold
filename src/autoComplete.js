@@ -83,15 +83,20 @@ async function autocomplete(inp) {
     }
   }
   document.addEventListener("click", function (e) {
-      let searchBarValue = document.getElementById("search-bar").value
-      let cardExists = cardNames.includes(encodeURIComponent(searchBarValue))
+      closeAllLists(e.target);
+  });
+  }
+
+  let submitButton = document.getElementById("autocomplete-submit")
+  submitButton.addEventListener("click", (e)=>{
+      let searchBar = document.getElementById("search-bar")
+      let cardExists = cardNames.includes(encodeURIComponent(searchBar.value))
       console.log(cardExists)
       if (!cardExists){
         e.preventDefault()
       }
-      closeAllLists(e.target);
-  });
-  }
+  })
+
 
   autocomplete(document.getElementById("search-bar"));
   autocompleteForm = document.getElementById("autocomplete-form")
