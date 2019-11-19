@@ -91,7 +91,3 @@ async function autocomplete(inp) {
       let submission = document.getElementById("search-bar").value
       sessionStorage["submission"] = submission
   })
-
-
-
-  
