@@ -15,9 +15,9 @@ async function fetchCardNames(){
 
 async function autocomplete(inp) {
     await fetchCardNames()
-    var currentFocus;
+    let currentFocus;
     inp.addEventListener("input", function(e) {
-        var a, b, i, val = this.value;
+        let a, b, i, val = this.value;
         val = encodeURIComponent(val).replace(/'/g, "%27")
         closeAllLists();
         if (!val) { return false;}
@@ -27,6 +27,7 @@ async function autocomplete(inp) {
         a.setAttribute("class", "autocomplete-items");
         this.parentNode.appendChild(a);
         for (i = 0; i < cardNames.length; i++) {
+          // val = decodeURIComponent(val).replace(/'/g, "%27")
           if (cardNames[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
             b = document.createElement("DIV");
             b.innerHTML = "<strong>" + decodeURIComponent(cardNames[i]).substr(0, val.length) + "</strong>";
@@ -41,7 +42,7 @@ async function autocomplete(inp) {
         }
     });
     inp.addEventListener("keydown", function(e) {
-        var x = document.getElementById(this.id + "autocomplete-list");
+        let x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
           currentFocus++;
@@ -68,13 +69,13 @@ async function autocomplete(inp) {
       x[currentFocus].classList.add("autocomplete-active");
     }
     function removeActive(x) {
-      for (var i = 0; i < x.length; i++) {
+      for (let i = 0; i < x.length; i++) {
         x[i].classList.remove("autocomplete-active");
       }
     }
     function closeAllLists(elmnt) {
-      var x = document.getElementsByClassName("autocomplete-items");
-      for (var i = 0; i < x.length; i++) {
+      let x = document.getElementsByClassName("autocomplete-items");
+      for (let i = 0; i < x.length; i++) {
         if (elmnt != x[i] && elmnt != inp) {
         x[i].parentNode.removeChild(x[i]);
       }
