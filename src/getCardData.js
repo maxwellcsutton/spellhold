@@ -1,9 +1,18 @@
 // for live
-let cardName = localStorage["submission"]
+let cardName = sessionStorage["submission"]
 // for testing in the command line - (npm i node-fetch)
 // const fetch = require("node-fetch")
 // let cardName = ""
 let cardData = []
+
+async function getCardData(){
+    //fetches the card data and constructs the cardData array of card data objects for each printing
+    let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&q=!%22${cardName}%22`)
+    let json = await response.json()
+    let allPrintingsObj = json.data
+    allPrintingsObj.forEach(createCardDataObjectforEachSet)
+    // console.log(cardData)
+}
 
 function createCardDataObjectforEachSet(index){
     let price = index.prices.usd
@@ -110,126 +119,4 @@ function createCardDataObjectforEachSet(index){
     return 
 }
 
-async function getCardData(){
-    //fetches the card data and constructs the cardData array of card data objects for each printing
-    let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&q=!%22${cardName}%22`)
-    let json = await response.json()
-    let allPrintingsObj = json.data
-    allPrintingsObj.forEach(createCardDataObjectforEachSet)
-    // console.log(cardData)
-}
-
-// getCardData()
-
-async function printCardData(){
-    await getCardData()
-    //this will display all the info that doesn't change per set at the top, but I might
-    //move all the card data together once I add tabs for each set
-    let staticCardInfo = document.getElementById('static-card-info');
-    let staticParent1 = document.createElement("p")
-    let staticChild1 = staticCardInfo.appendChild(staticParent1)
-    let isCreature = cardData[0].power
-    let isPlaneswalker = cardData[0].loyalty
-    let isDoubleSided = cardData[0].cardFaces
-    let isSplitOrNormal = cardData[0].image
-    if (!isDoubleSided){
-        // more logic for handling double sided cards, creatures, and planeswalkers
-        let staticResultsTemplate =
-            `<b>Color: </b>${cardData[0].color}<br>
-            <b>Mana Cost: </b>${cardData[0].cost}<br>
-            <b>Type: </b>${cardData[0].type}<br>
-            <b>Rules Text: </b>${cardData[0].text}<br>`
-         if (!cardData[0].cardFaces){
-            if (!isCreature && !isPlaneswalker){
-                staticChild1.innerHTML = staticResultsTemplate
-            } else if (isCreature){
-                staticChild1.innerHTML = staticResultsTemplate + 
-                    `<b>Power: </b>${cardData[0].power}<br>
-                    <b>Toughness: </b>${cardData[0].toughness}<br>`
-            } else if (isPlaneswalker){
-                staticChild1.innerHTML = staticResultsTemplate + 
-                    `<b>Loyalty: </b>${cardData[0].loyalty}<br>`
-            } else {
-                staticChild1.innerHTML = `Failed to display card data`
-            }
-        }
-    } else if (isDoubleSided) {
-        let staticParent2 = document.createElement("p")
-        let staticChild2 = staticCardInfo.appendChild(staticParent2)
-        let eachFaceHTML = []
-        let eachFace = cardData[0].cardFaces
-        eachFace.forEach((face)=>{
-            let staticResultsTemplate = 
-            `<b>Name: </b>${face.name}<br>
-            <b>Color: </b>${face.color}<br>
-            <b>Mana Cost: </b>${face.cost}<br>
-            <b>Type: </b>${face.type}<br>
-            <b>Rules Text: </b>${face.text}<br>`
-            let isCreature = face.power
-            let isPlaneswalker = face.loyalty
-            if (!isCreature && !isPlaneswalker){
-                eachFaceHTML.push(staticResultsTemplate)
-            } else if (isCreature){
-                staticResultsTemplate = staticResultsTemplate + 
-                    `<b>Power: </b>${face.power}<br>
-                    <b>Toughness: </b>${face.toughness}<br>`
-                eachFaceHTML.push(staticResultsTemplate)
-            } else if (isPlaneswalker) {
-                staticResultsTemplate = staticResultsTemplate +
-                    `<b>Loyalty: </b>${face.loyalty}<br>`
-                eachFaceHTML.push(staticResultsTemplate)
-            } else {
-                eachFaceHTML.push(`Failed to display card data`)
-            }
-        })
-        staticChild1.innerHTML = eachFaceHTML[0]
-        staticChild2.innerHTML = eachFaceHTML[1]
-        }
-    cardData.forEach((elem)=>{
-        //this will display all info that changes per set
-        let dynamicTab = document.getElementById("tab-buttons")
-        let dynamicTabParent = document.createElement("button")
-        let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
-        dynamicTabButtons.innerHTML = `<button class="tab-links" onclick="openCardTab(event, '${elem.setCode}')">${elem.setCode.toUpperCase()}</button>`
-        let cardImage = "No Image Found"
-        if (isSplitOrNormal){
-            cardImage = `<img class="card-image" src=${elem.image} alt=${elem.setCode}>`
-        } else if (isDoubleSided){
-            cardImage = `<img class="card-image" src=${elem.cardFaces[0].image} alt=${elem.setCode}>
-                        <img class="card-image" src=${elem.cardFaces[1].image} alt=${elem.setCode}>`
-        } else {
-            `<img class="card-image" src="https://ih0.redbubble.net/image.740534994.5777/mp,840x830,matte,f8f8f8,t-pad,750x1000,f8f8f8.u1.jpg" alt="Failed to display image">`
-        }
-        let dynamicResultsTemplate = 
-            `<div id=${elem.setCode} class="tab-results">
-                <h1 class="results-title">${elem.setName}</h1>
-                <div class="image-container">
-                ${cardImage}
-                </div>
-                <div class="content-container">
-                    <b>Set Name: </b>${elem.setName}<br>
-                    <b>Set Code: </b>${elem.setCode.toUpperCase()}<br>
-                    <b>Collector's Number: </b>${elem.collectorsNumber}<br>
-                    <b>Rarity: </b>${elem.rarity.charAt(0).toUpperCase() + elem.rarity.slice(1)}<br>
-                    <b>Price: </b>${elem.price}<br>
-                    <b>Projected Buy Price: </b>${elem.projectedBuyPrice}<br>
-                    <b>Foil Price: </b>${elem.foilPrice}<br>
-                    <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
-                    <a href=${elem.link} target="_blank">Check TCGPlayer.com</a><br><br>
-                </div>
-            </div>`
-        //TODO- figure out how to make the code from preventE.js work with these card quantity fields
-        let dynamicTabContent = document.getElementById("tab-content")
-        let dynamicTabContentParent = document.createElement("div")
-        let dynamicTabContentChild = dynamicTabContent.appendChild(dynamicTabContentParent)
-        dynamicTabContentChild.innerHTML = dynamicResultsTemplate
-    })
-}
-
-printCardData()
-
-/* <form id="add-to-fake-cart-${elem.setCode}">
-Price: <input class="card-price" type="text" value=${elem.price}>
-Quantity: <input id="quantity-${elem.setCode}" class="card-quantity" type="number" min="1">
-<input type="submit" value="Add to Cart">
-</form> */
+export {getCardData, cardData}

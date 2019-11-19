@@ -41,8 +41,6 @@ async function autocomplete(inp) {
         }
     });
     inp.addEventListener("keydown", function(e) {
-        console.log(e.keyCode)
-        console.log(this.value)
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
@@ -54,7 +52,6 @@ async function autocomplete(inp) {
         } else if (e.keyCode == 13) {
           // if the enter key is pressed and the card doesnt exist, prevent the form from being submitted
           let cardExists = cardNames.includes(encodeURIComponent(this.value))
-          console.log(cardExists)
           if (!cardExists){
             e.preventDefault()
           }
@@ -89,11 +86,8 @@ async function autocomplete(inp) {
   }
 
   autocomplete(document.getElementById("search-bar"));
-  document.addEventListener("submit", function (){
+  autocompleteForm = document.getElementById("autocomplete-form")
+  autocompleteForm.addEventListener("submit", function (){
       let submission = document.getElementById("search-bar").value
-      localStorage["submission"] = submission
+      sessionStorage["submission"] = submission
   })
-
-
-
-  
