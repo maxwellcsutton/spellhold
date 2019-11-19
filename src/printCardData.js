@@ -4,23 +4,22 @@ printCardData()
 
 async function printCardData(){
     await getCardData()
-    //this will display all the info that doesn't change per set at the top, but I might
-    //move all the card data together once I add tabs for each set
     printStaticData()
     cardData.forEach(printDynamicData)
-    //removing cart data for merge to master
-    //cardData.forEach(printCartLogic)
+    cardData.forEach(printCartLogic)
 }
 
 function printStaticData(){
+    //this will display all the info that doesn't change per set at the top, but I might
+    //move all the card data together once I add tabs for each set
     let staticCardInfo = document.getElementById('static-card-info');
     let staticParent1 = document.createElement("p")
     let staticChild1 = staticCardInfo.appendChild(staticParent1)
     let isCreature = cardData[0].power
     let isPlaneswalker = cardData[0].loyalty
     let isDoubleSided = cardData[0].cardFaces
+    // more logic for handling double sided cards, creatures, and planeswalkers
     if (!isDoubleSided){
-        // more logic for handling double sided cards, creatures, and planeswalkers
         let staticResultsTemplate =
             `<b>Color: </b>${cardData[0].color}<br>
             <b>Mana Cost: </b>${cardData[0].cost}<br>
@@ -75,9 +74,9 @@ function printStaticData(){
 }
 
 function printDynamicData(elem){
+    //this will display all info that changes per set
     let isDoubleSided = cardData[0].cardFaces
     let isSplitOrNormal = cardData[0].image
-    //this will display all info that changes per set
     let dynamicTab = document.getElementById("tab-buttons")
     let dynamicTabParent = document.createElement("button")
     let dynamicTabButtons = dynamicTab.appendChild(dynamicTabParent)
@@ -135,7 +134,7 @@ function printDynamicData(elem){
 }
 
 function printCartLogic(elem){
-    //this is to stop people from typing or copy/pasting e, -, or + into the number field
+        //this is to stop people from typing or copy/pasting e, -, or + into the number field
         //and also provides the logic for the fake cart system
         let cartElements = document.getElementById(`add-to-fake-cart-${elem.setCode}`)
         let cartScripts = document.createElement("script")
