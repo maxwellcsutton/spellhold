@@ -55,7 +55,7 @@ async function autocomplete(inp) {
           addActive(x);
         } else if (e.keyCode == 13) {
           // if the enter key is pressed and the card doesnt exist, prevent the form from being submitted
-          let cardExists = cardNames.includes(encodeURIComponent(this.value))
+          let cardExists = cardNames.includes(encodeURIComponent(this.value).replace(/'/g, "%27"))
           if (!cardExists){
             e.preventDefault()
             searchBarError.style.display = "block"
@@ -93,9 +93,11 @@ async function autocomplete(inp) {
   let submitButton = document.getElementById("autocomplete-submit")
   submitButton.addEventListener("click", (e)=>{
       let searchBar = document.getElementById("search-bar")
-      let cardExists = cardNames.includes(encodeURIComponent(searchBar.value))
+      let cardExists = cardNames.includes(encodeURIComponent(searchBar.value).replace(/'/g, "%27"))
       let searchBarError = document.getElementById("search-bar-error")
       console.log(cardExists)
+      console.log(encodeURIComponent(searchBar.value))
+      console.log(cardNames)
       if (!cardExists){
         e.preventDefault()
         searchBarError.style.display = "block"
