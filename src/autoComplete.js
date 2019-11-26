@@ -1,5 +1,5 @@
 // mostly copied from w3 schools tutorial, had to make some edits to make it work how I wanted to
-// mainly encoding and handling submit better
+// mainly encoding, handling submit better, and error messaging
 // ill save writing my own autocomplete function for the react refactor
 let cardNames = []
 
@@ -54,14 +54,19 @@ async function autocomplete(inp) {
           currentFocus--;
           addActive(x);
         } else if (e.keyCode == 13) {
-          // if the enter key is pressed and the card doesnt exist, prevent the form from being submitted
           let cardExists = cardNames.includes(encodeURIComponent(this.value).replace(/'/g, "%27"))
+          if (currentFocus > -1) {
+            if (x){
+               x[currentFocus].click();
+               // after clicking the autocompleted item, updates the value of card exists
+               // otherwise it'll set the display of the error to block despite actually being the correct card name and prevent the form submission
+               cardExists = cardNames.includes(encodeURIComponent(this.value).replace(/'/g, "%27"))
+            }
+          }
+          // if the enter key is pressed and the card doesnt exist, prevent the form from being submitted
           if (!cardExists){
             e.preventDefault()
             searchBarError.style.display = "block"
-          }
-          if (currentFocus > -1) {
-            if (x) x[currentFocus].click();
           }
         }
     });
@@ -95,9 +100,6 @@ async function autocomplete(inp) {
       let searchBar = document.getElementById("search-bar")
       let cardExists = cardNames.includes(encodeURIComponent(searchBar.value).replace(/'/g, "%27"))
       let searchBarError = document.getElementById("search-bar-error")
-      console.log(cardExists)
-      console.log(encodeURIComponent(searchBar.value))
-      console.log(cardNames)
       if (!cardExists){
         e.preventDefault()
         searchBarError.style.display = "block"
