@@ -4,14 +4,19 @@ printCardData()
 
 async function printCardData(){
     await getCardData()
+    if (cardData == undefined || cardData.length < 1){
+        print404()
+        return
+    }
     printStaticData()
     cardData.forEach(printDynamicData)
-    cardData.forEach(printCartLogic)
+    // removing cart data for merge to master
+    // cardData.forEach(printCartLogic)
 }
 
 function printStaticData(){
-    //this will display all the info that doesn't change per set at the top, but I might
-    //move all the card data together once I add tabs for each set
+    // this will display all the info that doesn't change per set at the top, but I might
+    // move all the card data together once I add tabs for each set
     let staticCardInfo = document.getElementById('static-card-info');
     let staticParent1 = document.createElement("p")
     let staticChild1 = staticCardInfo.appendChild(staticParent1)
@@ -74,7 +79,7 @@ function printStaticData(){
 }
 
 function printDynamicData(elem){
-    //this will display all info that changes per set
+    // this will display all info that changes per set
     let isDoubleSided = cardData[0].cardFaces
     let isSplitOrNormal = cardData[0].image
     let dynamicTab = document.getElementById("tab-buttons")
@@ -106,24 +111,6 @@ function printDynamicData(elem){
                 <b>Foil Price: </b>${elem.foilPrice}<br>
                 <b>Projected Foil Buy Price: </b>${elem.projectedFoilBuyPrice}<br><br>
                 <a href=${elem.link} target="_blank">Check TCGPlayer.com</a><br><br>
-                <form id="add-to-fake-cart-${elem.setCode}">
-                    <b>Selling to customer: </b><br>
-                    <select id="foil-selling-dropdown-${elem.setCode}">
-                        <option value="Non-foil">Non-foil</option>
-                        <option value="Foil">Foil</option>
-                    </select>
-                    Price: <input id="price-selling-${elem.setCode}" class="card-price" type="text" value=${elem.price}>
-                    Quantity: <input id="quantity-selling-${elem.setCode}" class="card-quantity" type="number" min="1" value="1">
-                    <input id="sell-button-${elem.setCode}" type="button" value="Sell"><br><br>
-                    <b>Buying from customer: </b><br>
-                    <select id="foil-buying-dropdown-${elem.setCode}">
-                        <option value="Non-foil">Non-foil</option>
-                        <option value="Foil">Foil</option>
-                    </select>
-                    Price: <input id="price-buying-${elem.setCode}" class="card-price" type="text" value=${elem.projectedBuyPrice}>
-                    Quantity: <input id="quantity-buying-${elem.setCode}" class="card-quantity" type="number" min="1" value="1">
-                    <input id="buy-button-${elem.setCode}" type="button" value="Buy">
-                </form>
             </div>
         </div>`
 
@@ -134,8 +121,8 @@ function printDynamicData(elem){
 }
 
 function printCartLogic(elem){
-        //this is to stop people from typing or copy/pasting e, -, or + into the number field
-        //and also provides the logic for the fake cart system
+        // this is to stop people from typing or copy/pasting e, -, or + into the number field
+        // and also provides the logic for the fake cart system
         let cartElements = document.getElementById(`add-to-fake-cart-${elem.setCode}`)
         let cartScripts = document.createElement("script")
         cartScripts.type = "text/javascript"
@@ -209,4 +196,12 @@ function printCartLogic(elem){
         cartScripts.appendChild(sellScriptsContent)
         cartScripts.appendChild(buyScriptsContent)
         cartElements.appendChild(cartScripts)
+}
+
+function print404(){
+    // this will display a 404 error message if the search fails for whatever reason
+    let allPrintings = document.getElementById("all-printings")
+    let error404 = document.getElementById("error-404")
+    allPrintings.style.display = "none"
+    error404.style.display = "block"
 }

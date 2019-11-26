@@ -6,9 +6,13 @@ let cardName = sessionStorage["submission"]
 let cardData = []
 
 async function getCardData(){
-    //fetches the card data and constructs the cardData array of card data objects for each printing
+    // fetches the card data and constructs the cardData array of card data objects for each printing
     let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&q=!%22${cardName}%22`)
     let json = await response.json()
+    let e404 = json.status
+    if (e404){
+        return
+    }
     let allPrintingsObj = json.data
     allPrintingsObj.forEach(createCardDataObjectforEachSet)
     // console.log(cardData)
@@ -39,7 +43,7 @@ function createCardDataObjectforEachSet(index){
         obj.projectedBuyPrice = "N/A"
     }
     if (foilPrice){
-        //same for foil price
+        // same for foil price
     obj.foilPrice = "$"+index.prices.usd_foil
     obj.projectedFoilBuyPrice = "$"+foilBuyPrice
     } else if (!foilPrice){
@@ -54,8 +58,8 @@ function createCardDataObjectforEachSet(index){
         obj.type = index.type_line
         obj.text = index.oracle_text
         obj.image = index.image_uris.normal
-        //creatures and planeswalkers have additional information on the card that other card types don't have.  This checks if it exists
-        //then if it does, adds it to the object
+        // creatures and planeswalkers have additional information on the card that other card types don't have.  This checks if it exists
+        // then if it does, adds it to the object
         if (isCreature){
             obj.power = index.power
             obj.toughness = index.toughness
@@ -64,7 +68,7 @@ function createCardDataObjectforEachSet(index){
             obj.loyalty = isPlaneswalker
         }
     } else if (isDoubleSided){
-        //if the card IS double sided, instead get the information for both the front and back of the card
+        // if the card IS double sided, instead get the information for both the front and back of the card
         let faces = []
         obj.cardFaces = faces
         isDoubleSided.forEach((side)=>{
@@ -78,11 +82,11 @@ function createCardDataObjectforEachSet(index){
             doubleSided.type = side.type_line
             doubleSided.text = side.oracle_text
             if (isntSplit){
-                //split cards and adventures will fall into this block, but their image is in the normal image location
-                //so if the card isn't split, get the image of each side
+                // split cards and adventures will fall into this block, but their image is in the normal image location
+                // so if the card isn't split, get the image of each side
                 doubleSided.image = side.image_uris.normal
             } else if (!isntSplit){
-                //and if it isn't split, do what would be done for a normal card
+                // and if it isn't split, do what would be done for a normal card
                 obj.image = index.image_uris.normal
                 doubleSided.color = index.colors
             }
@@ -98,22 +102,22 @@ function createCardDataObjectforEachSet(index){
             faces.push(doubleSided)
         })
     }
-    //this excludes all online only printings
+    // this excludes all online only printings
     let paperPrintingExists = index.games
     if (paperPrintingExists.includes("paper")){
         // this finds multiple printings from the same set (since magic used to print the same card with different arts in the same set) and increments them
         let increment = 1
         cardData.forEach((set)=>{
-            //set is the index of the array, each index of the array contains setCode : (the actual set code)
+            // set is the index of the array, each index of the array contains setCode : (the actual set code)
             let findDuplicates = Object.values(set).includes(obj.setCode)
-            //searches the array of card data objects for for a duplicate setCode
+            // searches the array of card data objects for for a duplicate setCode
             if (findDuplicates){
-                //if theres a duplicate, findDuplicates = true so add (1) to the setCode
+                // if theres a duplicate, findDuplicates = true so add (1) to the setCode
                 obj.setCode = index.set + "(" + increment + ")"
                 increment++
             }
         })
-        //pushes each individual card object to an array of card objects for later use
+        // pushes each individual card object to an array of card objects for later use
         cardData.push(obj)
     }
     return 

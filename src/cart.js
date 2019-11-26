@@ -1,7 +1,7 @@
-//TODO
-//1.make this reload whenever the cart tab is opened
-//2.make the data display in a table
-//3.maybe scrap all this and use a library
+// TODO
+// 1.make this reload whenever the cart tab is opened
+// 2.make the data display in a table
+// 3.maybe scrap all this and use a library
 let rawCartSaleData = [JSON.parse(sessionStorage.getItem("saleData"))]
 let rawCartPurchaseData = [JSON.parse(sessionStorage.getItem("purchaseData"))]
 let cartSaleData = rawCartSaleData.flat(Infinity)

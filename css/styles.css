@@ -97,3 +97,25 @@ input[type=submit] {
 .results-title{
   font-size: 1.4em;
 }
+
+.error-message{
+  color:red;
+  display:none;
+  font-size: 1em;
+}
+
+.content-container{
+  font-size: 1em;
+}
+
+.header1{
+  font-size: 1.5em;
+}
+
+.header2{
+  font-size: 1.25em;
+}
+
+.static-info{
+  font-size: 1em;
+}

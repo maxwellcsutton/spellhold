@@ -14,10 +14,9 @@ function openCardTab(event, code) {
     }
     if (!shown){
       document.getElementById(code).style.display = "block"
-      //for whatever reasonj this doesn't work because even though it sets to to block and shows it here
-      //it somehow still returns none?  leaving this code here until i can figure out why it works because it doesn't break anything
+      event.currentTarget.className += " active"
     } else if (shown){
       document.getElementById(code).style.display = "none"
+      event.currentTarget.className.replace(" active", "")
     }
-    event.currentTarget.className += " active"
   }

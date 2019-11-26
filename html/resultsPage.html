@@ -8,6 +8,7 @@
 
 <form id="autocomplete-form" autocomplete="off" action="./resultsPage.html">
   <div class="autocomplete" style="width:300px;">
+    <div id="search-bar-error" class="error-message">Please enter a complete card name.</div>
     <input id="search-bar" type="text" name="card-name-search-bar" placeholder="Type a card name...">
   </div>
   <input id="autocomplete-submit" type="submit">
@@ -42,9 +43,10 @@
 <script type="text/javascript" src="../src/openCardTab.js"></script>
 <script type="module" src="../src/printCardData.js"></script>
 
-<h1 id="card-name" style="font-size: 1.5em;"><script type="text/javascript">document.write(decodeURIComponent(sessionStorage["submission"]))</script></h1>
-<p id="static-card-info" style="font-size: 1em;"></p>
-<h2 id="all-printings" style="font-size: 1em;">All Printings</h2>
+<h1 id="card-name" class="header1"><script type="text/javascript">document.write(decodeURIComponent(sessionStorage["submission"]))</script></h1>
+<p id="static-card-info" class="static-info"></p>
+<h2 id="all-printings" class="header2">All Printings</h2>
+<p id="error-404" class="error-message">Card info could not be found, please wait and try again.</p>
 <div id="tab-buttons" class="tab"></div>
 <div id="tab-content"></div>
 </html>
