@@ -4,9 +4,10 @@ Pricing website for Spellhold Games.  The standard pricing website, TCGPlayer, c
 The current iteration has two pages, index.html, which contains only the search bar, and resultsPage.html, which also contains the search bar but displays the results of the search as well.
 
 Quick rundown of the js files:
-- autocomplete.js provides the logic behind the autocompletion and creation of the menu of matching Magic card names in addition to persisting the searched card name on click of submit.  I disallowed pressing enter in the form unless the form's contents match a card in the autocomplete array.  I'll add that same functionality to clicking submit as well eventually.
-- getCardData.js feeds the submission from the search bar into a GET from the Scryfall API which gets the card data, then loops through the resulting json file, extracting and displaying all relevant card data.
-- openCardTab.js handles the card tab opening (and eventually closing) on click.
+- autocomplete.js provides the logic behind the autocompletion and creation of the menu of matching Magic card names in addition to persisting the searched card name on click of submit.  I disallowed submitting the form unless the form's contents match a card in the autocomplete array.
+- getCardData.js feeds the submission from the search bar into a GET from the Scryfall API which gets the card data and creates an object with all relevant data
+- printCardData.js then loops through the resulting json file, extracting and displaying all card data created from getCardData.js.
+- openCardTab.js handles the card tab opening and closing on click.
 
 On the dev branch, the cart system is coming together, the UI needs some heavy improvements and the functionality isn't all there yet, so I haven't merged it to master.
 
