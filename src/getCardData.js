@@ -7,7 +7,7 @@ let cardData = []
 
 async function getCardData(){
     // fetches the card data and constructs the cardData array of card data objects for each printing
-    let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&q=!%22${cardName}%22`)
+    let response = await fetch(`https://api.scryfall.com/cards/search?unique=prints&include_extras=true&q=!%22${cardName}%22`)
     let json = await response.json()
     let e404 = json.status
     if (e404){
