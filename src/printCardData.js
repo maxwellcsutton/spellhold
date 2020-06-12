@@ -14,6 +14,8 @@ async function printCardData(){
     // cardData.forEach(printCartLogic)
 }
 
+//
+
 function printStaticData(){
     // this will display all the info that doesn't change per set at the top, but I might
     // move all the card data together once I add tabs for each set
