@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../img/Spellhold Games Logo.png";
 import title from "../img/Spellhold Games Title.jpeg";
 import "../css/App.css";
-import Navbar from "./Navbar.js";
+import NavBar from "./Navbar.js";
 import Footer from "./Footer.js";
 
 class App extends React.Component {
@@ -20,7 +20,7 @@ class App extends React.Component {
             <img src={title} className="App-title" alt="Spellhold Games" />
           </a>
         </div>
-        <Navbar />
+        <NavBar />
         {this.props.component}
         <Footer />
       </div>
