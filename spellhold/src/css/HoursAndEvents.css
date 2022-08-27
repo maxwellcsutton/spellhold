@@ -1,0 +1,21 @@
+.HoursAndEvents {
+  background-color: #282c34;
+  align-content: center;
+  padding-top: 16%;
+  padding-left: 16%;
+  font-size: calc(10px + 1vmin);
+  color: #c2c4c6;
+  order: 4;
+}
+
+.StoreLinks {
+  color: #c2c4c6;
+}
+
+.HoursTable {
+  text-align: left;
+}
+
+.HoursTable td {
+  padding-right: 50px;
+}
