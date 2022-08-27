@@ -1,0 +1,14 @@
+.App-sidebar {
+  background-color: #252560;
+  font-size: calc(10px + 1vmin);
+  float: left;
+  margin-top: 20%;
+  position: absolute;
+  order: 3;
+  color: #c2c4c6;
+  max-width: 15%;
+}
+
+.Sidebar-text {
+  color: #c2c4c6;
+}

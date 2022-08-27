@@ -1,20 +1,70 @@
-# spellhold
-Pricing website for Spellhold Games.  The standard pricing website, TCGPlayer, can often be slow and unwieldy so I decided to create my own pricing source to speed up customer interactions regarding card buying and selling for myself and my business partners.
+# Getting Started with Create React App
 
-The current iteration has two pages, index.html, which contains only the search bar, and resultsPage.html, which also contains the search bar but displays the results of the search as well.
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Quick rundown of the js files:
-- autocomplete.js provides the logic behind the autocompletion and creation of the menu of matching Magic card names in addition to persisting the searched card name on click of submit.  I disallowed submitting the form unless the form's contents match a card in the autocomplete array.
-- getCardData.js feeds the submission from the search bar into a GET from the Scryfall API which gets the card data and creates an object with all relevant data
-- printCardData.js then loops through the resulting json file, extracting and displaying all card data created from getCardData.js.
-- openCardTab.js handles the card tab opening and closing on click.
+## Available Scripts
 
-On the dev branch, the cart system is coming together, the UI needs some heavy improvements and the functionality isn't all there yet, so I haven't merged it to master.
+In the project directory, you can run:
 
-You can see it in action at http://maxsutton.dev/
+### `npm start`
 
-### TODO
-1. Add cart system to allow users to add cards to the cart with a custom quantity and price and denotate whether buying the card from a customer or selling to them
-2. Add CSS, Spellhold branding, and tweak the UI for a better user experience
-3. Cache card data from Scryfall API in SQL database and create HTTP requests to that database to obfuscate Scryfall API
-4. React refactor and automated testing just to practice both
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
