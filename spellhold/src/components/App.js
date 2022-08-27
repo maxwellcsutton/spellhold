@@ -12,9 +12,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
+        <a href="/">
+          <img src={logo} className="App-logo" alt="logo" />
+        </a>
         <div className="App-header">
-          <img src={title} className="App-title" alt="Spellhold Games" />
+          <a href="/">
+            <img src={title} className="App-title" alt="Spellhold Games" />
+          </a>
         </div>
         <Navbar />
         {this.props.component}

@@ -7,6 +7,7 @@ import HoursAndEvents from "./components/HoursAndEvents.js";
 import Prizing from "./components/Prizing";
 import Parking from "./components/Parking.js";
 import Food from "./components/Food";
+import Pricing from "./components/Pricing.js";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path="/prizing" element={<App component={<Prizing />} />} />
         <Route path="/parking" element={<App component={<Parking />} />} />
         <Route path="/food" element={<App component={<Food />} />} />
+        <Route path="/pricing" element={<App component={<Pricing />} />} />
       </Routes>
     </React.StrictMode>
   </Router>
