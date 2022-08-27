@@ -1,7 +1,7 @@
 {
   "name": "spellhold",
   "version": "0.1.0",
-  "homepage": "spellhold.games",
+  "homepage": "https://maxwellcsutton.github.io/spellhold",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
@@ -19,7 +19,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build -b master"
   },
   "eslintConfig": {
     "extends": [
