@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/spellhold/static/css/main.266f16e6.css",
+    "main.js": "/spellhold/static/js/main.e2689e89.js",
+    "static/media/Parking Map.png": "/spellhold/static/media/Parking Map.d216492f96af7c3774b4.png",
+    "static/media/Spellhold Games Logo.png": "/spellhold/static/media/Spellhold Games Logo.fd4b9f34b3fdb3cb0af9.png",
+    "static/media/f_logo_RGB-Blue_512.png": "/spellhold/static/media/f_logo_RGB-Blue_512.7fce0fac9bc3eb2e3580.png",
+    "static/media/Spellhold Games Title.jpeg": "/spellhold/static/media/Spellhold Games Title.f2fcadb944c04bd9f3f3.jpeg",
+    "static/media/tcgplayer-com-logos-idEcUqmZLQ.png": "/spellhold/static/media/tcgplayer-com-logos-idEcUqmZLQ.83ac5676125451219487.png",
+    "index.html": "/spellhold/index.html",
+    "main.266f16e6.css.map": "/spellhold/static/css/main.266f16e6.css.map",
+    "main.e2689e89.js.map": "/spellhold/static/js/main.e2689e89.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.266f16e6.css",
+    "static/js/main.e2689e89.js"
+  ]
+}
