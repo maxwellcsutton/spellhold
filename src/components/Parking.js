@@ -5,7 +5,11 @@ import parking from "../img/Parking Map.png";
 function Parking() {
   return (
     <div className="Parking">
-      <img src={parking} className="ParkingMap" />
+      <img
+        src={parking}
+        alt="Parking map failed to load"
+        className="ParkingMap"
+      />
       <div className="ParkingText">
         <p>Areas marked in green are the allowed parking areas</p>
         <p>Red arrows are store entrances</p>

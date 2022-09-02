@@ -1,4 +1,4 @@
-import React, { setState, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/PricingSearchBar.css";
 import { ReactSearchAutocomplete } from "react-search-autocomplete";
 import Autocomplete from "../api/autocomplete.js";
