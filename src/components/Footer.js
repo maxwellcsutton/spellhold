@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/Footer.css";
-import discordLogo from "../img/discord logo.png";
+import discordLogo from "../img/discord logo.webp";
 import fbLogo from "../img/facebook logo.webp";
 import yelpLogo from "../img/yelp logo.webp";
 import tcgLogo from "../img/tcgplayer-com-logos-idEcUqmZLQ.png";
