@@ -2,33 +2,60 @@
   background-color: #282c34;
 }
 
-.App {
-  background-color: #282c34;
-  flex-wrap: row;
-}
-
-.App-title {
-  margin-left: 30%;
-}
-
-.App-logo {
-  margin: 0;
+.container {
+  max-width: 100%;
+  overflow-x: hidden;
+  position: fixed;
   padding: 0;
-  max-width: 15%;
-  max-height: 15%;
-  float: left;
-  order: 1;
+  background-color: #282c34;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.App-header {
+.header {
+  order: 1;
   background-color: #252560;
-  font-size: calc(10px + 2vmin);
-  color: #c2c4c6;
-  float: left;
-  position: relative;
+  height: 150px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.spellhold-logo {
+  order: 1;
+  max-height: 150px;
+
+  flex: none;
+  align-self: flex-start;
+}
+
+.spellhold-title {
   order: 2;
-  width: 80%;
-  height: 15%;
+  color: #c2c4c6;
+  font-size: calc(10px + 5vmin);
+  flex-grow: 1;
+  text-align: center;
+}
+
+.delineator {
+  order: 2;
+  width: 100%;
+  height: 1vh;
+  background-color: #282c34;
+}
+
+.navbar {
+  order: 3;
+}
+
+.page-content {
+  order: 4;
+  margin-top: 3vh;
+  display: flex;
+  justify-content: center;
 }
 
 .App-link {

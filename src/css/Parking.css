@@ -1,11 +1,9 @@
 .ParkingMap {
-  margin-top: 5%;
-  margin-left: 5%;
   max-height: 600px;
   max-width: 600px;
 }
 
 .ParkingText {
-  margin-left: 20%;
+  font-size: calc(10px + 1vmin);
   color: #c2c4c6;
 }

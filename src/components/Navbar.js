@@ -4,27 +4,23 @@ import "../css/Navbar.css";
 
 function NavBar() {
   return (
-    <div className="App-sidebar">
+    <div className="navbar">
       <NavLink to="/" className="Sidebar-text">
         Address, Hours, and Event Schedule
       </NavLink>
-      <br />
-      <br />
+      <div>|</div>
       <NavLink to="/pricing" className="Sidebar-text">
         Pricing Tool
       </NavLink>
-      <br />
-      <br />
+      <div>|</div>
       <NavLink to="/prizing" className="Sidebar-text">
         Weekly Event Prizing
       </NavLink>
-      <br />
-      <br />
+      <div>|</div>
       <NavLink to="/parking" className="Sidebar-text">
         Parking Map
       </NavLink>
-      <br />
-      <br />
+      <div>|</div>
       <NavLink to="/food" className="Sidebar-text">
         Local Food
       </NavLink>

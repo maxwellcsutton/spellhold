@@ -1,8 +1,8 @@
 import React from "react";
 import "../css/Footer.css";
-import discordLogo from "../img/discord-logo.png";
-import fbLogo from "../img/f_logo_RGB-Blue_512.png";
-import yelpLogo from "../img/yelp_favicon.png";
+import discordLogo from "../img/discord logo.png";
+import fbLogo from "../img/facebook logo.webp";
+import yelpLogo from "../img/yelp logo.webp";
 import tcgLogo from "../img/tcgplayer-com-logos-idEcUqmZLQ.png";
 
 function Footer() {
@@ -36,12 +36,20 @@ function Footer() {
       >
         <img src={tcgLogo} className="TCGPlayer" alt="logo" />
       </a>
-      <p className="PhoneNum">
-        Phone:{" "}
-        <a className="StoreLinks" href="tel:7145869517">
-          (714) 586-9517
-        </a>
-      </p>
+      <div className="contact-info">
+        <div>
+          Phone:{" "}
+          <a className="StoreLinks" href="tel:7145869517">
+            (714) 586-9517
+          </a>
+        </div>
+        <div>
+          Email:{" "}
+          <a className="StoreLinks" href="mailto: support@spellholdgames.com">
+            support@spellholdgames.com
+          </a>
+        </div>
+      </div>
     </div>
   );
 }

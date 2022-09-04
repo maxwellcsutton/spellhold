@@ -1,6 +1,6 @@
 .Food {
   color: #c2c4c6;
-  margin-left: 20%;
+  font-size: calc(10px + 1vmin);
 }
 
 .Restaurants {

@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../img/Spellhold Games Logo.png";
-import title from "../img/Spellhold Games Title.jpeg";
+// import title from "../img/Spellhold Games Title.png";
 import "../css/App.css";
 import NavBar from "./Navbar.js";
 import Footer from "./Footer.js";
@@ -11,17 +11,16 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="App">
-        <a href="/">
-          <img src={logo} className="App-logo" alt="logo" />
-        </a>
-        <div className="App-header">
+      <div className="container">
+        <div className="header">
           <a href="/">
-            <img src={title} className="App-title" alt="Spellhold Games" />
+            <img src={logo} className="spellhold-logo" alt="logo" />
           </a>
+          <div className="spellhold-title">Spellhold Games</div>
         </div>
-        <NavBar />
-        {this.props.component}
+        <div className="delineator"></div>
+        <NavBar className="navbar" />
+        <div className="page-content">{this.props.component}</div>
         <Footer />
       </div>
     );
