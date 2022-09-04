@@ -21,7 +21,7 @@ class App extends React.Component {
         <div className="delineator"></div>
         <NavBar className="navbar" />
         <div className="page-content">{this.props.component}</div>
-        <Footer />
+        <Footer className="footer" />
       </div>
     );
   }
