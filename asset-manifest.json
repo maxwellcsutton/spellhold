@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.99fcd8a3.css",
+    "main.css": "/static/css/main.dc9cebe0.css",
     "main.js": "/static/js/main.08b02e84.js",
     "static/media/Parking Map.png": "/static/media/Parking Map.d216492f96af7c3774b4.png",
     "static/media/Spellhold Games Logo.png": "/static/media/Spellhold Games Logo.87d30677a18ab6c8aa7d.png",
@@ -9,11 +9,11 @@
     "static/media/discord logo.webp": "/static/media/discord logo.209ebbb6a4f8a0c5eb4a.webp",
     "static/media/facebook logo.webp": "/static/media/facebook logo.a1702c9210dfa6ae2d9f.webp",
     "index.html": "/index.html",
-    "main.99fcd8a3.css.map": "/static/css/main.99fcd8a3.css.map",
+    "main.dc9cebe0.css.map": "/static/css/main.dc9cebe0.css.map",
     "main.08b02e84.js.map": "/static/js/main.08b02e84.js.map"
   },
   "entrypoints": [
-    "static/css/main.99fcd8a3.css",
+    "static/css/main.dc9cebe0.css",
     "static/js/main.08b02e84.js"
   ]
 }
