@@ -4,7 +4,6 @@
 
 .container {
   max-width: 100%;
-  overflow-x: hidden;
   position: fixed;
   padding: 0;
   background-color: #282c34;
