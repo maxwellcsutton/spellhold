@@ -3,7 +3,7 @@
   font-size: calc(10px + 1vmin);
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   color: #c2c4c6;
 }
 
