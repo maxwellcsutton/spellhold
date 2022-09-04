@@ -11,16 +11,18 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div className="container">
-        <div className="header">
-          <a href="/">
-            <img src={logo} className="spellhold-logo" alt="logo" />
-          </a>
-          <div className="spellhold-title">Spellhold Games</div>
+      <div>
+        <div className="container">
+          <div className="header">
+            <a href="/">
+              <img src={logo} className="spellhold-logo" alt="logo" />
+            </a>
+            <div className="spellhold-title">Spellhold Games</div>
+          </div>
+          <div className="delineator"></div>
+          <NavBar className="navbar" />
+          <div className="page-content">{this.props.component}</div>
         </div>
-        <div className="delineator"></div>
-        <NavBar className="navbar" />
-        <div className="page-content">{this.props.component}</div>
         <Footer className="footer" />
       </div>
     );
