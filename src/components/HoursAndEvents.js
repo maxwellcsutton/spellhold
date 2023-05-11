@@ -45,7 +45,7 @@ function HoursAndEvents() {
           </tr>
           <tr>
             <td>Friday: 4pm-11pm</td>
-            <td>Draft @7:30pm | Pioneer @7:30pm</td>
+            <td>Draft @7:30pm | FNM Constructed @7:30pm</td>
           </tr>
           <tr>
             <td>Saturday: 12pm-8pm</td>
