@@ -28,32 +28,32 @@ function HoursAndEvents() {
             <th>Event Schedule</th>
           </tr>
           <tr>
-            <td>Monday: 5pm-11pm</td>
+            <td>Monday: 4pm-11pm</td>
             <td>Modern @7:30pm</td>
           </tr>
           <tr>
-            <td>Tuesday: 5pm-11pm</td>
+            <td>Tuesday: 4pm-11pm</td>
             <td>Legacy @7:30pm</td>
           </tr>
           <tr>
-            <td>Wednesday: Closed</td>
-            <td></td>
+            <td>Wednesday: 4pm-11pm</td>
+            <td>Pauper @7:30pm</td>
           </tr>
           <tr>
-            <td>Thursday: 5pm-11pm</td>
+            <td>Thursday: 4pm-11pm</td>
             <td>Pioneer @7:30pm</td>
           </tr>
           <tr>
-            <td>Friday: 5pm-12am</td>
-            <td>Pauper @7:30pm | Draft @7:45pm</td>
+            <td>Friday: 4pm-11pm</td>
+            <td>Draft @7:30pm | Pioneer @7:30pm</td>
           </tr>
           <tr>
-            <td>Saturday: Closed</td>
-            <td></td>
+            <td>Saturday: 12pm-8pm</td>
+            <td>Commander All Day & Open Play</td>
           </tr>
           <tr>
-            <td>Sunday: Closed</td>
-            <td></td>
+            <td>Sunday: 12pm-8pm</td>
+            <td>Commander All Day & Open Play</td>
           </tr>
         </tbody>
       </table>
